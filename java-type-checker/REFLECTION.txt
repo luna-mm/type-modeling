@@ -1,0 +1,5 @@
+I skipped over checking lhs and rhs in check_types in JavaAssignment, which caused every test to pass except for one
+single test in test 7. I puzzled over this so much and then I realized, and I just checked both left hand and
+right hand instinctively. Now I see your note, and seeing how LHS isn't necessary for this case, I'm glad I
+checked it now! I don't think you can learn something from my solution, like I forgot about "pass" so I just did
+return, but there's no real non-trivial differences besides formatting {0}.{1}() instead of all in one var, etc.

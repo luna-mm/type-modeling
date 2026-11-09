@@ -88,6 +88,8 @@ class JavaPrimitiveType(JavaType):
 
     Primitive types are not object types and do not have methods.
     """
+    def is_subtype_of(self, other): 
+        return self == other;
 
 
 class JavaObjectType(JavaType):
@@ -133,6 +135,12 @@ class JavaObjectType(JavaType):
                     pass
             raise NoSuchJavaMethod("{0} has no method named {1}".format(self.name, name))
 
+    def is_subtype_of(self, other):
+        for type in self.direct_supertypes:
+            if type.is_subtype_of(other): return True;
+        return other == self;
+
+
 
 class JavaVoidType(JavaType):
     """The Java type `void`.
@@ -152,6 +160,20 @@ class JavaNullType(JavaType):
     """
     def __init__(self):
         super().__init__("null")
+
+    is_object_type = True
+
+    def is_subtype_of(self, other):
+        return other.is_object_type
+
+    def method_named(self, method_name):
+        raise NoSuchJavaMethod(
+            "Cannot invoke method {0}() on {1}".format(
+                method_name,
+                self.name,
+            )
+        )
+
 
 
 class JavaTypeError(Exception):
